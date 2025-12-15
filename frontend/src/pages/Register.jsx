@@ -3,20 +3,33 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../style/login.css";
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { register } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
     setLoading(true);
 
-    const result = await login(email, password);
+    const result = await register(email, password, fullName);
 
     if (result.success) {
       navigate("/upload");
@@ -32,12 +45,23 @@ const Login = () => {
       <main className="login-page">
         <div className="login-wrapper">
           <div className="login-box">
-            <h1>Welcome back</h1>
-            <p>Login to your Rapihin.ai account</p>
+            <h1>Create Account</h1>
+            <p>Sign up for Rapihin.ai</p>
 
             {error && <div className="error-message">{error}</div>}
 
             <form onSubmit={handleSubmit}>
+              <label htmlFor="fullName">Full Name</label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="John Doe"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
+
               <label htmlFor="email">Email</label>
               <input
                 type="email"
@@ -60,23 +84,24 @@ const Login = () => {
                 required
               />
 
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+
               <button type="submit" className="login-btn" disabled={loading}>
-                {loading ? "Logging in..." : "Log In"}
+                {loading ? "Creating account..." : "Sign Up"}
               </button>
             </form>
 
-            <div className="divider">OR</div>
-
-            <button className="google-btn" onClick={() => alert("Google OAuth coming soon!")}>
-              <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                alt="Google icon"
-              />
-              Sign in with Google
-            </button>
-
             <p className="signup-text">
-              Don't have an account? <Link to="/register">Sign up</Link>
+              Already have an account? <Link to="/login">Log in</Link>
             </p>
           </div>
         </div>
@@ -85,4 +110,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
