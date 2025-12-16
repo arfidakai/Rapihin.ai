@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import homeImage from "../assets/home.png";
+import heroIllustration from "../assets/hero-illustration.svg";
 import "../style/home.css";
 
 const Home = () => {
@@ -11,19 +11,19 @@ const Home = () => {
       <div className="scroll-container">
         <section className="hero">
           <div className="hero-text">
-            <h1>
-              Effortless Thesis Formatting with <span>Rapihin.ai</span>
+            <h1 className="hero-title">
+              Effortless Formatting for Students with <span>Rapihin.ai</span>
             </h1>
             <p>
               Focus on your research—we'll handle the formatting. Instantly
               convert your thesis into a campus-approved structure with just a few
               clicks.
             </p>
-            <a href="/upload" className="btn">Get Started Free</a>
+            <a href="/upload" className="btn btn-glow">Get Started Free</a>
             <p>*Login with Google to save your activity history</p>
           </div>
           <div className="hero-image">
-            <img src={homeImage} alt="Rapihin.ai preview" />
+            <img src={heroIllustration} alt="Rapihin.ai preview" className="hero-graphic" />
           </div>
         </section>
 
