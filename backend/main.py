@@ -23,14 +23,19 @@ app = FastAPI(
 )
 
 # CORS configuration
+dev_ports = [
+    os.getenv("FRONTEND_PORT", "5173"),
+    "5174",  # common alternate when 5173 is busy
+    "3000",
+]
+allowed_origins = set()
+for port in dev_ports:
+    allowed_origins.add(f"http://localhost:{port}")
+    allowed_origins.add(f"http://127.0.0.1:{port}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",  # Vite default
-        "http://127.0.0.1:5173",
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=list(allowed_origins),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

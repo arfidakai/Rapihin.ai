@@ -22,7 +22,7 @@ const UploadPage = () => {
     if (file && (file.name.endsWith(".doc") || file.name.endsWith(".docx"))) {
       fileInputRef.current.files = e.dataTransfer.files;
       setFileName("Selected: " + file.name);
-      setDownloadUrl(null); // reset kalau ada sebelumnya
+      setDownloadUrl(null);
     } else {
       alert("Only .doc or .docx files are allowed.");
     }
@@ -31,17 +31,18 @@ const UploadPage = () => {
   const handleFileChange = (e) => {
     if (e.target.files.length > 0) {
       setFileName("Selected: " + e.target.files[0].name);
-      setDownloadUrl(null); // reset juga
+      setDownloadUrl(null);
     }
+  };
+
   const handleFormatClick = async () => {
-    if (fileInputRef.current.files.length === 0) {
+    if (!fileInputRef.current || fileInputRef.current.files.length === 0) {
       setError("Please choose a .doc or .docx file first.");
       return;
     }
 
     const file = fileInputRef.current.files[0];
-    
-    // Validate file size (max 10MB)
+
     if (file.size > 10 * 1024 * 1024) {
       setError("File size must be less than 10MB");
       return;
@@ -53,15 +54,24 @@ const UploadPage = () => {
 
     try {
       const response = await documentAPI.formatDocument(file, documentType, university);
-
       const url = window.URL.createObjectURL(new Blob([response.data]));
       setDownloadUrl(url);
-      
-      // Auto-download
-      const link = document.createElement('a');
+
+      const link = document.createElement("a");
       link.href = url;
       link.download = `formatted_${file.name}`;
       document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      const errorMsg = err.response?.data?.detail || "Failed to format document. Please try again.";
+      setError(errorMsg);
+      console.error("Upload error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -79,7 +89,7 @@ const UploadPage = () => {
             💡 <strong>Tip:</strong> <a href="/login" style={{ color: "#856404", textDecoration: "underline" }}>Login</a> to save your formatting history!
           </div>
         )}
-        
+
         {error && (
           <div style={{
             backgroundColor: "#f8d7da",
@@ -92,21 +102,7 @@ const UploadPage = () => {
             ❌ {error}
           </div>
         )}
-        
-        <div
-          className="upload-box"
-          id="drop-zone"
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={handleDrop}
-        >
-  };  setLoading(false);
-    }
-  };
 
-  return (
-    <>
-      <Navbar />
-      <main className="container">
         <div
           className="upload-box"
           id="drop-zone"
@@ -116,6 +112,47 @@ const UploadPage = () => {
           <span className="material-icons download-icon">download</span>
           <p>Drag & drop your file here,<br />or</p>
           <label htmlFor="file-upload" className="upload-btn">
+            Choose File
+          </label>
+          <input
+            type="file"
+            id="file-upload"
+            accept=".doc,.docx"
+            style={{ display: "none" }}
+            ref={fileInputRef}
+            onChange={handleFileChange}
+          />
+          <p>{fileName}</p>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="jenis">Select Document Type</label>
+          <select
+            id="jenis"
+            value={documentType}
+            onChange={(e) => setDocumentType(e.target.value)}
+          >
+            <option>Academic Papers</option>
+            <option>Thesis</option>
+            <option>Internship Report</option>
+            <option>Dissertation</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="kampus">Select University/Template</label>
+          <select
+            id="kampus"
+            value={university}
+            onChange={(e) => setUniversity(e.target.value)}
+          >
+            <option>National Standard</option>
+            <option>ITB</option>
+            <option>UI</option>
+            <option>UGM</option>
+          </select>
+        </div>
+
         <button className="submit-btn" onClick={handleFormatClick} disabled={loading}>
           {loading ? "Formatting..." : "Format Now"}
         </button>
@@ -131,9 +168,9 @@ const UploadPage = () => {
           }}>
             <p style={{ marginBottom: "0.5rem" }}>✅ Document formatted successfully!</p>
             <p style={{ fontSize: "0.9rem" }}>File downloaded automatically. If not, click below:</p>
-            <a 
-              href={downloadUrl} 
-              download="formatted_document.docx" 
+            <a
+              href={downloadUrl}
+              download="formatted_document.docx"
               style={{
                 display: "inline-block",
                 marginTop: "0.5rem",
@@ -151,47 +188,6 @@ const UploadPage = () => {
                 📊 Check your <a href="/history" style={{ color: "#155724", textDecoration: "underline" }}>History</a> page
               </p>
             )}
-          </div>
-        )}  value={documentType} 
-            onChange={(e) => setDocumentType(e.target.value)}
-          >
-            <option>Academic Papers</option>
-            <option>Thesis</option>
-            <option>Internship Report</option>
-            <option>Dissertation</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="kampus">Select University/Template</label>
-          <select 
-            id="kampus" 
-            value={university} 
-            onChange={(e) => setUniversity(e.target.value)}
-          >
-            <option>National Standard</option>
-            <option>ITB</option>
-            <option>UI</option>
-            <option>UGM</option>
-          </select>
-        </div>
-
-        <button className="submit-btn" onClick={handleFormatClick}>
-          {loading ? "Formatting..." : "Format Now"}
-        </button>
-
-        {loading && (
-          <div className="loading-overlay">
-            <div className="loading-spinner"></div>
-            <p>Formatting document...</p>
-          </div>
-        )}
-
-        {downloadUrl && (
-          <div className="download-result">
-            <a href={downloadUrl} download="hasil_format.docx" className="text-green-600 underline">
-              📥 Unduh File Hasil
-            </a>
           </div>
         )}
       </main>
