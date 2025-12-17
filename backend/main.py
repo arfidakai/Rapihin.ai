@@ -5,6 +5,7 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 import uvicorn
 import os
+from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from pathlib import Path
 import shutil
@@ -16,6 +17,8 @@ from app.database import (
     create_user, get_user_by_email, save_format_history, get_user_history
 )
 
+load_dotenv()
+
 app = FastAPI(
     title="Rapihin.ai API",
     description="API for automatic thesis and academic document formatting",
@@ -23,19 +26,30 @@ app = FastAPI(
 )
 
 # CORS configuration
-dev_ports = [
-    os.getenv("FRONTEND_PORT", "5173"),
-    "5174",  # common alternate when 5173 is busy
-    "3000",
-]
 allowed_origins = set()
+
+# Allow specific origins from env (comma-separated)
+env_origins = os.getenv("ALLOWED_ORIGINS")
+if env_origins:
+    for origin in env_origins.split(","):
+        origin = origin.strip()
+        if origin:
+            allowed_origins.add(origin)
+
+# Always include common dev ports
+dev_ports = [os.getenv("FRONTEND_PORT", "5173"), "5174", "3000"]
 for port in dev_ports:
     allowed_origins.add(f"http://localhost:{port}")
     allowed_origins.add(f"http://127.0.0.1:{port}")
 
+# If FRONTEND_URL is provided, add it
+frontend_url = os.getenv("FRONTEND_URL")
+if frontend_url:
+    allowed_origins.add(frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=list(allowed_origins),
+    allow_origins=list(allowed_origins) or ["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
