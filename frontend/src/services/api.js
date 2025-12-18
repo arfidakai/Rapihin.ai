@@ -58,4 +58,10 @@ export const documentAPI = {
     api.get('/api/templates'),
 };
 
+// AI API
+export const aiAPI = {
+  proofread: (text, language = 'id', style = null) =>
+    api.post('/api/ai/proofread', { text, language, style }),
+};
+
 export default api;

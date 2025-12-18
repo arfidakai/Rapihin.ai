@@ -1,282 +1,444 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+/* Home.css (scoped) */
+.homePage{
+  --bg: #0b0b0c;
+  --bg2: #111214;
+  --panel: #2b2c2f;
+  --panel2: #333438;
+  --text: #f3f3f4;
+  --muted: rgba(243,243,244,.72);
+  --muted2: rgba(243,243,244,.55);
+  --blue: #1f4aa5;
+  --blue2: #153a86;
+  --shadow: 0 18px 50px rgba(0,0,0,.45);
+  --radius: 22px;
+  --radius2: 28px;
+
+  min-height: 100vh;
+  color: var(--text);
+  background: radial-gradient(1200px 700px at 20% 10%, #191a1d 0%, var(--bg) 45%, #050506 100%);
 }
 
-html {
-  scroll-behavior: smooth;
+.homePage *{ box-sizing:border-box; }
+.homePage a{ color: inherit; text-decoration:none; }
+.homePage button{ font: inherit; }
+
+.homePage{
+  --navH: 64px; /* match .navbar height */
 }
 
-body {
-  --bg-1: #0b1220;
-  --bg-2: #0f172a;
-  background: radial-gradient(900px 380px at 12% 8%, rgba(37,99,235,0.15), transparent),
-              radial-gradient(700px 280px at 88% 22%, rgba(6,182,212,0.10), transparent),
-              linear-gradient(180deg, var(--bg-1), var(--bg-2));
-  color: #e2eeff;
-  line-height: 1.5;
-  overflow: hidden;
-  height: 100vh;
+@media (max-width: 768px){
+  .homePage{ --navH: 56px; }
 }
 
-.scroll-container {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
+.homePage main{
+  padding-top: var(--navH);
 }
 
-section {
-  scroll-snap-align: start;
-  height: 100vh;
+
+
+.homePage .container{
+  width: min(1100px, 92%);
+  margin: 0 auto;
 }
 
-.logo-img {
-  width: 40px;
-  height: auto;
-  margin-left: 50px;
+
+.homePage .headerInner{
+  height: 56px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
-.logo {
-  font-weight: bold;
-  font-size: 23px;
-  color: #fff;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 1px;
-}
-
-.nav-links a {
-  margin-left: 50px;
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: 500;
-  font-style: bold;
-  gap: 3px;
-}
-
-.hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 100px 50px;
-  flex-wrap: wrap;
-}
-
-.hero-text {
-  flex: 1;
-  max-width: 500px;
-  margin-left: 100px;
-  color: #ffffff;
-}
-
-.hero-text h1 {
-  font-size: 42px;
-  margin-bottom: 15px;
-}
-
-.hero-text p {
-  margin-bottom: 20px;
-  color: #8e96a7;
-}
-
-.btn {
-  display: inline-block;
-  background: linear-gradient(90deg, #163870, #1e3a8a);
-  color: white;
-  padding: 12px 20px;
-  text-decoration: none;
-  border-radius: 10px;
+.homePage .brand{
   font-weight: 700;
-  box-shadow: 0 10px 20px rgba(22,56,112,0.25);
-  transition: transform .15s ease, box-shadow .15s ease;
+  letter-spacing: .2px;
 }
 
-.btn:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(22,56,112,0.35); }
-
-.hero-image {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.hero-image img {
-  max-width: 520px;
-  width: 100%;
-  margin-top: -40px;
-  margin-right: 70px;
-  animation: gentleTilt 8s ease-in-out infinite;
-}
-
-@keyframes gentleTilt {
-  0%,100% { transform: rotate(0deg) translateY(0); }
-  50% { transform: rotate(-0.8deg) translateY(-4px); }
-}
-
-/* Benefits section */
-.benefits {
-  text-align: center;
-  padding: 120px 20px;
-  margin-left: 100px;
-  margin-right: 100px;
-}
-
-.benefits h2 {
-  text-align: center;
-  color: #ffffff;
-  margin-top: 50px;
-}
-
-.steps {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 30px;
-  margin-top: 40px;
-}
-
-.step {
-  background: #213552;
-  border-radius: 12px;
-  padding: 30px;
-  flex: 1;
-  min-width: 240px;
-  text-align: center;
-}
-
-.step .icon {
-  font-size: 36px;
-  margin-bottom: 16px;
-  color: #2563eb;
-}
-
-.step h4 {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: #ffffff;
-}
-
-.step p {
-  font-size: 16px;
-  color: #bcc1cc;
-}
-
-.how-it-works {
-  padding: 100px 50px;
-  text-align: center;
-  color: #ffffff;
-}
-
-.how-it-works h2 {
-  font-size: 36px;
-  margin-bottom: 50px;
-  color: #ffffff;
-  margin-top: 50px;
-}
-
-.steps-container {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-
-.step-box {
-  border-radius: 12px;
-  padding: 30px 25px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  max-width: 250px;
-  transition: transform 0.3s;
-}
-
-.step-box:hover {
-  transform: translateY(-5px);
-}
-
-.step-number {
-  background-color: #213552;
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: bold;
+.homePage .iconBtn{
   width: 40px;
   height: 40px;
-  line-height: 40px;
-  border-radius: 50%;
-  margin: 0 auto 15px;
+  display:grid;
+  place-items:center;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.9);
+  cursor: pointer;
+}
+.homePage .iconBtn:hover{ background: rgba(255,255,255,.07); }
+
+/* Hero (match design spacing) */
+.homePage .hero{ padding: 26px 0 10px; }
+
+/* .homePage .heroGrid{
+  display:grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+}
+/* On mobile, put copy above artwork for better UX */
+/* .homePage .heroCopy{ order: -1; }
+
+.homePage .heroArt{
+  height: 170px;
+  border-radius: var(--radius2);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0));
+  border: 1px solid rgba(255,255,255,.07);
+  position: relative;
+  overflow:hidden;
+} */ */
+
+.homePage .artBlob{
+  position:absolute;
+  inset: -30% -10% auto -10%;
+  height: 220px;
+  background: radial-gradient(circle at 30% 30%, rgba(79,169,255,.55), rgba(79,169,255,0) 60%);
+  filter: blur(2px);
 }
 
-.step-box h3 {
-  margin-bottom: 10px;
-  color: #ffffff;
-  font-size: 20px;
+.homePage .artCard{
+  position:absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  width: 170px;
+  height: 120px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
+  border: 1px solid rgba(255,255,255,.12);
 }
 
-.step-box p {
-  font-size: 14px;
-  color: #90969e;
+.homePage .artDot{
+  position:absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, rgba(120,214,255,.95), rgba(20,140,255,.6));
+  box-shadow: 0 10px 25px rgba(0,0,0,.35);
+}
+.homePage .d1{ left: 14%; top: 26%; }
+.homePage .d2{ right: 18%; top: 18%; width: 38px; height: 38px; opacity:.9; }
+.homePage .d3{ right: 28%; bottom: 14%; width: 34px; height: 34px; opacity:.85; }
+
+.homePage .heroCopy{ padding: 2px 0 10px; }
+
+.homePage .kicker{
+  font-size: 12px;
+  letter-spacing: .8px;
+  font-weight: 600;
+  color: rgba(255,255,255,.75);
+  margin-bottom: 12px;
 }
 
-.fitur {
-  padding: 80px 200px;
-  background-color: #0d0d16; /* Warna gelap */
-  color: #fff;
-}
-
-/* Bagi menjadi dua kolom */
-.fitur-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 40px;
-}
-
-/* Judul kiri */
-.fitur-title h1 {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #ffffff;
+.homePage .h1{
   margin: 0;
+  font-size: clamp(34px, 7vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.8px;
 }
 
-.fitur-title h1:first-child {
-  margin-top: 100px;
-  margin-bottom: 10px;
+.homePage .sub{
+  margin: 10px 0 18px;
+  color: var(--muted);
+  font-size: 14px;
 }
 
-/* List kanan */
-.fitur-list {
-  list-style: none;
-  margin-top: 80px;
-  padding: 0;
-  color: #ffffff;
-  font-size: 1.1rem;
-  margin-left: -50px;
+.homePage .ctaRow{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  max-width: 420px;
+}
+/* Full-width CTAs on small screens */
+.homePage .ctaRow .btn{ width: 100%; }
+
+.homePage .note{
+  margin: 14px 0 0;
+  color: var(--muted2);
+  font-size: 13px;
 }
 
-.fitur-list li {
-  margin-bottom: 16px;
+/* Buttons */
+.homePage .btn{
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.92);
+  padding: 13px 16px;
+  border-radius: 999px;
+  cursor:pointer;
+  transition: transform .12s ease, background .12s ease;
 }
+.homePage .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.08); }
+.homePage .btn:active{ transform: translateY(0px); }
+
+.homePage .btn.primary{
+  background: linear-gradient(180deg, var(--blue), var(--blue2));
+  border-color: rgba(255,255,255,.10);
+}
+.homePage .btn.primary:hover{ background: linear-gradient(180deg, #2454be, #173f95); }
+
+.homePage .btn.secondary{
+  background: rgba(31,74,165,.25);
+  border-color: rgba(31,74,165,.55);
+}
+
+.homePage .btn.small{ padding: 12px 16px; width: fit-content; }
+
+/* Cards section */
+.homePage .cardsSection{ padding: 16px 0 22px; }
+
+.homePage .cardsGrid{
+  display:grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+.homePage .card{
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius2);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+.homePage .cardMedia{
+  height: 170px;
+  display:grid;
+  place-items:center;
+  position: relative;
+  background: radial-gradient(420px 240px at 40% 30%, rgba(79,169,255,.35), rgba(79,169,255,0) 60%),
+              linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0));
+}
+.homePage .cardMedia.tall{ height: 190px; }
+
+.homePage .mediaCircle{
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, rgba(120,214,255,.95), rgba(20,140,255,.55));
+  opacity: .9;
+}
+
+.homePage .mediaSmall{
+  position:absolute;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.9), rgba(120,214,255,.35));
+  opacity: .7;
+}
+.homePage .mediaSmall.s1{ left: 18%; top: 24%; }
+.homePage .mediaSmall.s2{ right: 16%; bottom: 20%; width: 34px; height: 34px; opacity:.55; }
+
+.homePage .mediaPanel{
+  width: 82%;
+  height: 70%;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.04));
+}
+
+.homePage .cardBody{ padding: 18px 18px 18px; }
+
+.homePage .h2{
+  margin: 0 0 10px;
+  font-size: 28px;
+  line-height: 1.08;
+  letter-spacing: -0.4px;
+}
+
+.homePage .p{
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.homePage .steps{
+  margin: 10px 0 16px;
+  display:grid;
+  gap: 12px;
+}
+.homePage .stepTitle{
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.homePage .stepDesc{
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+/* Reviews */
+.homePage .reviews{ padding: 8px 0 28px; }
+
+.homePage .sectionTitle{
+  margin: 0;
+  text-align:center;
+  font-size: 28px;
+  letter-spacing: -0.2px;
+}
+.homePage .sectionSub{
+  margin: 6px 0 16px;
+  text-align:center;
+  color: var(--muted2);
+  font-size: 13px;
+}
+
+.homePage .reviewCard{
+  padding: 18px;
+  text-align:center;
+}
+
+.homePage .quote{ margin: 0 0 12px; color: rgba(255,255,255,.9); }
+
+.homePage .stars{
+  display:flex;
+  justify-content:center;
+  gap: 6px;
+  margin: 6px 0 12px;
+}
+.homePage .star{ font-size: 16px; opacity: .95; }
+
+.homePage .reviewer .name{
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.homePage .reviewer .role{
+  color: var(--muted2);
+  font-size: 12.5px;
+}
+
+.homePage .dots{
+  display:flex;
+  justify-content:center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.homePage .dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.25);
+}
+.homePage .dot.active{ background: rgba(255,255,255,.6); }
 
 /* Footer */
-.footer-container {
-  max-width: 1000px;
-  margin: 60px auto 0;
+.homePage .footer{
+  margin-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  background: rgba(0,0,0,.25);
+}
+.homePage .footerInner{
+  padding: 16px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+}
+.homePage .footerBrand{
+  font-weight: 700;
+  color: rgba(255,255,255,.85);
+}
+.homePage .footerNav{
+  display:none;
+  gap: 18px;
+  color: rgba(255,255,255,.7);
+  font-size: 13px;
+}
+.homePage .footerNav a:hover{ color: rgba(255,255,255,.9); }
+.homePage .footerDropdown{
+  border-radius: 999px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.75);
+  cursor:pointer;
 }
 
-.footer {
-  color: #f9fafb;
-  padding: 15px 20px;
-  text-align: center;
+/* Desktop tweaks */
+@media (min-width: 900px){
+  .homePage .hero{ padding: 36px 0 18px; }
+  .homePage .heroGrid{
+    grid-template-columns: 1.05fr .95fr;
+    align-items:center;
+    gap: 26px;
+  }
+  .homePage .heroArt{ height: 320px; }
+  /* Restore default order on desktop */
+  .homePage .heroCopy{ order: 0; }
+  .homePage .ctaRow{ flex-direction:row; }
+  .homePage .btn{ min-width: 190px; }
+  .homePage .ctaRow .btn{ width: auto; }
+
+  .homePage .cardsGrid{
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .homePage .footerNav{ display:flex; }
 }
 
-.footer p {
-  margin-top: 100px;
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: #d1d5db;
+/* Small phones: tighten spacing and sizes */
+@media (max-width: 480px){
+  .homePage .hero{ padding: 20px 0 8px; }
+  .homePage .heroArt{ height: 150px; }
+  .homePage .cardBody{ padding: 16px; }
+  .homePage .cardsSection{ padding: 12px 0 16px; }
 }
+
+/* Large desktop polish */
+@media (min-width: 1200px){
+  .homePage .heroArt{ height: 360px; }
+}
+
+
+/* ===== Mobile fixes ===== */
+@media (max-width: 768px){
+
+  /* container jangan terlalu sempit + aman dari notch */
+  .homePage .container{
+    width: min(1100px, 92%);
+  }
+
+  /* hero jadi stack rapi */
+  .homePage .hero{
+    padding: 18px 0 8px;
+  }
+
+  .homePage .heroGrid{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* artwork jangan kegedean */
+  .homePage .heroArt{
+    height: 150px;
+    border-radius: 22px;
+  }
+
+  /* headline biar nggak kepotong */
+  .homePage .h1{
+    font-size: 34px;
+    line-height: 1.05;
+  }
+
+  /* tombol full width biar mirip desain mobile */
+  .homePage .ctaRow{
+    max-width: 100%;
+  }
+  .homePage .btn{
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* cards jadi 1 kolom (pasti) */
+  .homePage .cardsGrid{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* card media aman */
+  .homePage .cardMedia{
+    height: 160px;
+  }
+}
+/* ===== End Mobile fixes ===== */
