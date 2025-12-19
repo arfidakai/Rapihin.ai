@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Navbar from "../components/Navbar";
 import "../style/login.css";
 
 const Login = () => {
@@ -28,8 +29,9 @@ const Login = () => {
   };
 
   return (
-    <>
-      <main className="login-page">
+    <div className="loginPage">
+      <Navbar />
+      <main className="loginMain">
         <div className="login-wrapper">
           <div className="login-box">
             <h1>Welcome back</h1>
@@ -81,7 +83,7 @@ const Login = () => {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 };
 

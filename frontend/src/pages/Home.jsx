@@ -58,8 +58,8 @@ const Hero = () => {
           </p>
 
           <div className="ctaRow">
-            <button className="btn primary">Get started</button>
-            <button className="btn secondary">Learn more</button>
+            <a href="/upload" className="btn secondary">Get started</a>
+             <a href="/info" className="btn secondary">Learn more</a>
           </div>
 
           <p className="note">

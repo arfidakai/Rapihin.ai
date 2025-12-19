@@ -5,6 +5,7 @@ import UploadPage from "./pages/UploadPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import History from "./pages/History";
+import Info from "./pages/Info";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/history" element={<History />} />
+          <Route path="/info" element={<Info />} />
         </Routes>
       </Router>
     </AuthProvider>
