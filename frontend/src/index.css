@@ -1,4 +1,8 @@
-/* src/index.css — minimal, non-opinionated reset to avoid layout bugs */
+/* src/index.css — Tailwind CSS base styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * { box-sizing: border-box; }
 
 html, body { height: 100%; }

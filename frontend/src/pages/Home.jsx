@@ -1,202 +1,229 @@
-import React from "react";
-import Navbar from "../components/Navbar";
-import "../style/home.css";
 
+import React, { useState, useEffect } from 'react';
+import { Settings, Star, Menu, X } from 'lucide-react';
+import styles from './Home.module.css';
 
-const StarRow = ({ count = 5 }) => (
-  <div className="stars" aria-label={`${count} out of 5 stars`}>
-    {Array.from({ length: count }).map((_, i) => (
-      <span key={i} className="star" aria-hidden="true">★</span>
-    ))}
-  </div>
-);
+export default function BaphinLanding() {
+  const [scrollY, setScrollY] = useState(0);
+  const [isVisible, setIsVisible] = useState({
+    'section-hero': true,
+    'section-solution': true,
+    'section-join': true,
+    'section-reviews': true
+  });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-const Header = () => {
-  return (
-    <header className="header">
-      <div className="container headerInner">
-        <div className="brand">Rapihin.ai</div>
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-        <button className="iconBtn" aria-label="Settings">
-          {/* simple gear svg */}
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
-              stroke="currentColor" strokeWidth="1.8"
-            />
-            <path
-              d="M19.4 15a8.6 8.6 0 0 0 .1-1l2-1.5-2-3.5-2.4.8a8 8 0 0 0-1.7-1l-.4-2.5h-4l-.4 2.5c-.6.3-1.2.6-1.7 1L4.5 9l-2 3.5 2 1.5a8.6 8.6 0 0 0 .1 1 8.6 8.6 0 0 0-.1 1l-2 1.5 2 3.5 2.4-.8c.5.4 1.1.7 1.7 1l.4 2.5h4l.4-2.5c.6-.3 1.2-.6 1.7-1l2.4.8 2-3.5-2-1.5a8.6 8.6 0 0 0-.1-1Z"
-              stroke="currentColor" strokeWidth="1.4" opacity="0.9"
-            />
-          </svg>
-        </button>
-      </div>
-    </header>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible((prev) => ({ ...prev, [entry.target.id]: true }));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('[id^="section-"]').forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const Section = ({ id, children, delay = 0 }) => (
+    <div
+      id={id}
+      className={styles.section}
+      style={{
+        opacity: isVisible[id] ? 1 : 0,
+        transform: isVisible[id] ? 'translateY(0)' : 'translateY(30px)',
+        transition: `all 0.8s ease-out ${delay}s`
+      }}
+    >
+      {children}
+    </div>
   );
-};
 
-const Hero = () => {
+  const Button = ({ children, primary, onClick, style }) => (
+    <button
+      onClick={onClick}
+      className={[
+        styles.button,
+        primary ? styles.buttonPrimary : styles.buttonSecondary
+      ].join(' ')}
+      style={style}
+    >
+      {children}
+    </button>
+  );
+
   return (
-    <section className="hero">
-      <div className="container heroGrid">
-        <div className="heroArt" aria-hidden="true">
-          {/* placeholder artwork area – replace with your image later */}
-          <div className="artBlob" />
-          <div className="artCard" />
-          <div className="artDot d1" />
-          <div className="artDot d2" />
-          <div className="artDot d3" />
+    <div className={styles.container}>
+      {/* Header */}
+      <header className={styles.header}>
+        <div className={styles.headerContent}>
+          <h1 className={styles.logo}>Rapihin.ai</h1>
+          
+          {/* Desktop Nav */}
+          <nav className={styles.nav}>
+            <a href="#section-hero" className={styles.navLink}>Home</a>
+            <a href="#section-join" className={styles.navLink}>How it Works</a>
+            <a href="#section-reviews" className={styles.navLink}>Reviews</a>
+            <Button primary style={{ padding: '0.6rem 1.2rem' }}>Login</Button>
+            <Button style={{ padding: '0.6rem 1.2rem' }}>Get Started</Button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button className={styles.mobileMenuBtn} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
 
-        <div className="heroCopy">
-          <div className="kicker">- Free 14 DAYS TRIAL</div>
-          <h1 className="h1">
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className={styles.mobileMenu}>
+            <a href="#section-hero" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>Home</a>
+            <a href="#section-join" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>How it Works</a>
+            <a href="#section-reviews" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>Reviews</a>
+            <Button primary style={{ width: '100%', marginTop: '1rem' }}>Login</Button>
+            <Button style={{ width: '100%', marginTop: '0.5rem' }}>Get Started</Button>
+          </div>
+        )}
+      </header>
+
+      {/* Hero Section */}
+      <Section id="section-hero">
+        <div className={styles.hero}>
+          <div className={styles.badge}>✨ Free 14 DAYS TRIAL</div>
+          <h2 className={styles.heroTitle}>
             Effortless formatting for academic papers.
-          </h1>
-          <p className="sub">
-            Streamline your document creation process.
+          </h2>
+          <p className={styles.subtitle}>
+            Streamline your document creation process with AI-powered formatting tools.
           </p>
-
-          <div className="ctaRow">
-            <a href="/upload" className="btn secondary">Get started</a>
-             <a href="/info" className="btn secondary">Learn more</a>
+          <div className={styles.buttonGroup}>
+            <Button primary>Get started</Button>
+            <Button>Learn more</Button>
           </div>
-
-          <p className="note">
-            Loved by students and institutions worldwide
+          <p style={{ color: '#808080', fontSize: '0.9rem' }}>
+            Loved by 10,000+ students and institutions worldwide
           </p>
         </div>
-      </div>
-    </section>
-  );
-};
+      </Section>
 
-const FeatureCard = ({ title, desc, button, variant = "a" }) => {
-  return (
-    <div className={`card featureCard v-${variant}`}>
-      <div className="cardMedia" aria-hidden="true">
-        {/* placeholder media */}
-        <div className="mediaCircle" />
-        <div className="mediaSmall s1" />
-        <div className="mediaSmall s2" />
-      </div>
-
-      <div className="cardBody">
-        <h2 className="h2">{title}</h2>
-        <p className="p">{desc}</p>
-        <button className="btn primary small">{button}</button>
-      </div>
-    </div>
-  );
-};
-
-const StepsCard = () => {
-  return (
-    <div className="card stepsCard">
-      <div className="cardMedia tall" aria-hidden="true">
-        {/* placeholder media */}
-        <div className="mediaPanel" />
-      </div>
-
-      <div className="cardBody">
-        <h2 className="h2">How to join our platform</h2>
-        <p className="p">Follow these 3 easy steps to get started.</p>
-
-        <div className="steps">
-          <div className="step">
-            <div className="stepTitle">Step 1</div>
-            <div className="stepDesc">Sign up and create your account quickly.</div>
-          </div>
-          <div className="step">
-            <div className="stepTitle">Step 2</div>
-            <div className="stepDesc">Choose your formatting preferences and upload your document.</div>
-          </div>
-          <div className="step">
-            <div className="stepTitle">Step 3</div>
-            <div className="stepDesc">Receive your formatted document in seconds.</div>
-          </div>
-        </div>
-
-        <button className="btn primary">Join us now</button>
-      </div>
-    </div>
-  );
-};
-
-const Reviews = () => {
-  return (
-    <section className="reviews">
-      <div className="container">
-        <h2 className="sectionTitle">User Reviews</h2>
-        <p className="sectionSub">
-          Our users appreciate the efficiency and ease of use.
-        </p>
-
-        <div className="card reviewCard">
-          <p className="quote">
-            <strong>Rapihin.ai</strong> transformed my thesis writing process!
+      {/* Smart Solution */}
+      <Section id="section-solution" delay={0.2}>
+        <div className={styles.card}>
+          <div className={styles.iconBox}>🚀</div>
+          <h3 className={styles.cardTitle} style={{ textAlign: 'center' }}>
+            Discover a smart solution
+          </h3>
+          <p className={styles.subtitle} style={{ textAlign: 'center' }}>
+            Join us and enhance your academic experience with AI-powered tools!
           </p>
-
-          <StarRow />
-
-          <div className="reviewer">
-            <div className="name">Jordan Smith</div>
-            <div className="role">Graduate Student, University</div>
-          </div>
-
-          <div className="dots" aria-label="Carousel indicators">
-            <span className="dot active" />
-            <span className="dot" />
-            <span className="dot" />
+          <div style={{ textAlign: 'center' }}>
+            <Button primary>Start now</Button>
           </div>
         </div>
-      </div>
-    </section>
-  );
-};
+      </Section>
 
-const Footer = () => {
-  return (
-    <footer className="footer">
-      <div className="container footerInner">
-        <div className="footerBrand">Brand Logo</div>
-
-        <nav className="footerNav" aria-label="Footer navigation">
-          <a href="#home">Home</a>
-          <a href="#services">Servi</a>
-          <a href="#contact">Contact</a>
-        </nav>
-
-        <button className="footerDropdown" aria-label="Footer dropdown">
-          Dropdown
-        </button>
-      </div>
-    </footer>
-  );
-};
-
-export default function App() {
-  return (
-    <div className="homePage" id="home">
-      <Navbar />
-      <main>
-        <Hero />
-
-        <section className="cardsSection">
-          <div className="container cardsGrid">
-            <FeatureCard
-              variant="a"
-              title="Discover a smart solution"
-              desc="Join us and enhance your academic experience!"
-              button="Start now"
-            />
-            <StepsCard />
+      {/* How to Join */}
+      <Section id="section-join" delay={0.3}>
+        <div className={styles.card}>
+          <div className={styles.iconBox}>📋</div>
+          <h3 className={styles.cardTitle} style={{ textAlign: 'center' }}>
+            How to join our platform
+          </h3>
+          <p className={styles.subtitle} style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+            Follow these 3 easy steps to get started.
+          </p>
+          <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+            {[
+              { step: 'Step 1', text: 'Sign up and create your account quickly.' },
+              { step: 'Step 2', text: 'Choose your formatting preferences and upload your document.' },
+              { step: 'Step 3', text: 'Receive your formatted document in seconds.' }
+            ].map((item, i) => (
+              <div
+                key={i}
+                className={styles.stepCard}
+                style={{ animation: `fadeIn 0.5s ease-out ${i * 0.1}s both` }}
+              >
+                <h4 style={{ fontWeight: '700', marginBottom: '0.5rem', fontSize: '1.1rem' }}>
+                  {item.step}
+                </h4>
+                <p style={{ color: '#a0a0a0', lineHeight: '1.6' }}>{item.text}</p>
+              </div>
+            ))}
           </div>
-        </section>
+          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+            <Button primary>Join us now</Button>
+          </div>
+        </div>
+      </Section>
 
-        <Reviews />
-      </main>
-      <Footer />
+      {/* Reviews */}
+      <Section id="section-reviews" delay={0.4}>
+        <div className={styles.reviewsContainer}>
+          <h3 className={styles.reviewsTitle}>User Reviews</h3>
+          <p className={styles.reviewsSubtitle}>
+            Our users appreciate the efficiency and ease of use.
+          </p>
+          
+          <div className={styles.reviewsGrid}>
+            {[
+              { name: 'Sarah Johnson', initial: 'SJ', role: 'PhD Student', quote: 'Rapihin.ai transformed my thesis writing process completely!' },
+              { name: 'Michael Chen', initial: 'MC', role: 'Graduate Student', quote: 'The AI-powered formatting saved me hours of tedious work.' },
+              { name: 'Emma Williams', initial: 'EW', role: 'Research Assistant', quote: 'Best tool for academic document formatting. Highly recommended!' }
+            ].map((review, i) => (
+              <div key={i} className={styles.reviewCard}>
+                <div className={styles.reviewHeader}>
+                  <div className={styles.reviewAvatar}>{review.initial}</div>
+                  <div className={styles.reviewInfo}>
+                    <p className={styles.reviewName}>{review.name}</p>
+                    <p className={styles.reviewRole}>{review.role}</p>
+                  </div>
+                </div>
+                <div className={styles.stars}>
+                  {[...Array(5)].map((_, j) => (
+                    <Star
+                      key={j}
+                      size={18}
+                      fill="#fbbf24"
+                      color="#fbbf24"
+                    />
+                  ))}
+                </div>
+                <p className={styles.reviewQuote}>"{review.quote}"</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>⚙️</div>
+          <h4 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Rapihin.ai</h4>
+          <p style={{ color: '#808080', marginBottom: '2rem' }}>
+            AI-powered document formatting for academic excellence.
+          </p>
+          <div className={styles.footerLinks}>
+            <a href="#" className={styles.navLink}>Product</a>
+            <a href="#" className={styles.navLink}>Features</a>
+            <a href="#" className={styles.navLink}>Support</a>
+            <a href="#" className={styles.navLink}>Contact</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
