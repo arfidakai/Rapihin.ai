@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Settings, Star, Menu, X } from 'lucide-react';
 import styles from './Home.module.css';
 
 export default function BaphinLanding() {
+  const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState({
     'section-hero': true,
@@ -77,8 +79,8 @@ export default function BaphinLanding() {
             <a href="#section-hero" className={styles.navLink}>Home</a>
             <a href="#section-join" className={styles.navLink}>How it Works</a>
             <a href="#section-reviews" className={styles.navLink}>Reviews</a>
-            <Button primary style={{ padding: '0.6rem 1.2rem' }}>Login</Button>
-            <Button style={{ padding: '0.6rem 1.2rem' }}>Get Started</Button>
+            <Button primary style={{ padding: '0.6rem 1.2rem' }} onClick={() => navigate('/login')}>Login</Button>
+            <Button style={{ padding: '0.6rem 1.2rem' }} onClick={() => navigate('/upload')}>Get Started</Button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -93,8 +95,8 @@ export default function BaphinLanding() {
             <a href="#section-hero" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>Home</a>
             <a href="#section-join" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>How it Works</a>
             <a href="#section-reviews" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>Reviews</a>
-            <Button primary style={{ width: '100%', marginTop: '1rem' }}>Login</Button>
-            <Button style={{ width: '100%', marginTop: '0.5rem' }}>Get Started</Button>
+            <Button primary style={{ width: '100%', marginTop: '1rem' }} onClick={() => { setMobileMenuOpen(false); navigate('/login'); }}>Login</Button>
+            <Button style={{ width: '100%', marginTop: '0.5rem' }} onClick={() => { setMobileMenuOpen(false); navigate('/upload'); }}>Get Started</Button>
           </div>
         )}
       </header>
@@ -110,8 +112,8 @@ export default function BaphinLanding() {
             Streamline your document creation process with AI-powered formatting tools.
           </p>
           <div className={styles.buttonGroup}>
-            <Button primary>Get started</Button>
-            <Button>Learn more</Button>
+            <Button primary onClick={() => navigate('/upload')}>Get started</Button>
+            <Button onClick={() => window.scrollTo({ top: document.getElementById('section-join').offsetTop - 80, behavior: 'smooth' })}>Learn more</Button>
           </div>
           <p style={{ color: '#808080', fontSize: '0.9rem' }}>
             Loved by 10,000+ students and institutions worldwide
@@ -130,7 +132,7 @@ export default function BaphinLanding() {
             Join us and enhance your academic experience with AI-powered tools!
           </p>
           <div style={{ textAlign: 'center' }}>
-            <Button primary>Start now</Button>
+            <Button primary onClick={() => navigate('/register')}>Start now</Button>
           </div>
         </div>
       </Section>
@@ -164,7 +166,7 @@ export default function BaphinLanding() {
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <Button primary>Join us now</Button>
+            <Button primary onClick={() => navigate('/register')}>Join us now</Button>
           </div>
         </div>
       </Section>
