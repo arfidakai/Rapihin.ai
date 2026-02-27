@@ -73,32 +73,18 @@ const UploadPage = () => {
   };
 
   return (
-    <>
+    <div className="uploadPage">
       <Navbar />
       {loading && <LoadingSpinner message="Formatting your document..." />}
       <main className="container">
         {!user && (
-          <div style={{
-            backgroundColor: "#fff3cd",
-            color: "#856404",
-            padding: "1rem",
-            borderRadius: "8px",
-            marginBottom: "1rem",
-            textAlign: "center",
-          }}>
-            💡 <strong>Tip:</strong> <a href="/login" style={{ color: "#856404", textDecoration: "underline" }}>Login</a> to save your formatting history!
+          <div className="alert alert-warning">
+            💡 <strong>Tip:</strong> <a href="/login">Login</a> to save your formatting history!
           </div>
         )}
 
         {error && (
-          <div style={{
-            backgroundColor: "#f8d7da",
-            color: "#721c24",
-            padding: "1rem",
-            borderRadius: "8px",
-            marginBottom: "1rem",
-            textAlign: "center",
-          }}>
+          <div className="alert alert-error">
             ❌ {error}
           </div>
         )}
@@ -109,7 +95,7 @@ const UploadPage = () => {
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
         >
-          <span className="material-icons download-icon">download</span>
+          <span className="material-icons download-icon">📄</span>
           <p>Drag & drop your file here,<br />or</p>
           <label htmlFor="file-upload" className="upload-btn">
             Choose File
@@ -158,41 +144,26 @@ const UploadPage = () => {
         </button>
 
         {downloadUrl && (
-          <div style={{
-            backgroundColor: "#d4edda",
-            color: "#155724",
-            padding: "1rem",
-            borderRadius: "8px",
-            marginTop: "1rem",
-            textAlign: "center",
-          }}>
-            <p style={{ marginBottom: "0.5rem" }}>✅ Document formatted successfully!</p>
+          <div className="success-box">
+            <p><strong>✅ Document formatted successfully!</strong></p>
             <p style={{ fontSize: "0.9rem" }}>File downloaded automatically. If not, click below:</p>
             <a
               href={downloadUrl}
               download="formatted_document.docx"
-              style={{
-                display: "inline-block",
-                marginTop: "0.5rem",
-                padding: "0.5rem 1rem",
-                backgroundColor: "#28a745",
-                color: "white",
-                textDecoration: "none",
-                borderRadius: "4px",
-              }}
+              className="download-again-btn"
             >
               📥 Download Again
             </a>
             {user && (
-              <p style={{ marginTop: "0.5rem", fontSize: "0.9rem" }}>
-                📊 Check your <a href="/history" style={{ color: "#155724", textDecoration: "underline" }}>History</a> page
+              <p style={{ marginTop: "12px", fontSize: "0.9rem" }}>
+                📊 Check your <a href="/history">History</a> page
               </p>
             )}
           </div>
         )}
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 
