@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import "../style/login.css";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import styles from "./Auth.module.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -41,72 +43,88 @@ const Register = () => {
   };
 
   return (
-    <>
-      <main className="login-page">
-        <div className="login-wrapper">
-          <div className="login-box">
-            <h1>Create Account</h1>
-            <p>Sign up for Rapihin.ai</p>
+    <div className={styles.authPage}>
+      <Navbar />
+      <main className={styles.authMain}>
+        <div className={styles.authWrapper}>
+          <div className={styles.authBox}>
+            <div className={styles.authHeader}>
+              <h1 className={styles.title}>Create Account</h1>
+              <p className={styles.subtitle}>Sign up for Rapihin.ai</p>
+            </div>
 
-            {error && <div className="error-message">{error}</div>}
+            {error && <div className={styles.errorMessage}>{error}</div>}
 
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="fullName">Full Name</label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                placeholder="John Doe"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-              />
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <div className={styles.formGroup}>
+                <label htmlFor="fullName" className={styles.label}>Full Name</label>
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  className={styles.input}
+                  placeholder="John Doe"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+              </div>
 
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <div className={styles.formGroup}>
+                <label htmlFor="email" className={styles.label}>Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className={styles.input}
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
 
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className={styles.formGroup}>
+                <label htmlFor="password" className={styles.label}>Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  className={styles.input}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
 
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="••••••••"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
+              <div className={styles.formGroup}>
+                <label htmlFor="confirmPassword" className={styles.label}>Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  className={styles.input}
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
 
-              <button type="submit" className="login-btn" disabled={loading}>
+              <button type="submit" className={styles.submitBtn} disabled={loading}>
                 {loading ? "Creating account..." : "Sign Up"}
               </button>
             </form>
 
-            <p className="signup-text">
-              Already have an account? <Link to="/login">Log in</Link>
+            <p className={styles.footerText}>
+              Already have an account? <Link to="/login" className={styles.link}>Log in</Link>
             </p>
           </div>
         </div>
       </main>
-    </>
+      <Footer />
+    </div>
   );
 };
 
