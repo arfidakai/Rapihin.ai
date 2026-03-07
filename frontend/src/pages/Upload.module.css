@@ -21,8 +21,8 @@
   padding: 1rem 1.25rem;
   border-radius: 12px;
   margin-bottom: 2rem;
-  background-color: rgba(102, 126, 234, 0.1);
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  background-color: rgba(74, 144, 226, 0.1);
+  border: 1px solid rgba(74, 144, 226, 0.3);
   font-size: 0.95rem;
 }
 
@@ -31,14 +31,14 @@
 }
 
 .alertLink {
-  color: #667eea;
+  color: #4a90e2;
   text-decoration: underline;
   font-weight: 600;
   transition: color 0.3s;
 }
 
 .alertLink:hover {
-  color: #764ba2;
+  color: #357abd;
 }
 
 .alertError {
@@ -61,7 +61,7 @@
   font-weight: 700;
   text-align: center;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -88,8 +88,8 @@
 }
 
 .uploadBox:hover {
-  border-color: rgba(102, 126, 234, 0.5);
-  background-color: rgba(102, 126, 234, 0.05);
+  border-color: rgba(74, 144, 226, 0.5);
+  background-color: rgba(74, 144, 226, 0.05);
   transform: translateY(-2px);
 }
 
@@ -113,10 +113,10 @@
 
 .uploadBtn {
   display: inline-block;
-  padding: 0.875rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 14px 24px;
+  background: #4a90e2;
   color: white;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
@@ -126,8 +126,8 @@
 
 .uploadBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-  background: linear-gradient(135deg, #5568d3 0%, #64397d 100%);
+  box-shadow: 0 10px 25px rgba(74, 144, 226, 0.4);
+  background: #357abd;
 }
 
 .fileName {
@@ -155,7 +155,7 @@
   padding: 0.875rem 1rem;
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  border-radius: 12px;
   color: white;
   font-size: 1rem;
   cursor: pointer;
@@ -163,15 +163,15 @@
 }
 
 .select:hover {
-  border-color: rgba(102, 126, 234, 0.5);
+  border-color: rgba(74, 144, 226, 0.5);
   background-color: rgba(255, 255, 255, 0.08);
 }
 
 .select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #4a90e2;
   background-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
 .select option {
@@ -183,11 +183,11 @@
 /* Submit Button */
 .submitBtn {
   width: 100%;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 14px 24px;
+  background: #4a90e2;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 600;
   font-size: 1.1rem;
   cursor: pointer;
@@ -197,8 +197,8 @@
 
 .submitBtn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-  background: linear-gradient(135deg, #5568d3 0%, #64397d 100%);
+  box-shadow: 0 15px 35px rgba(74, 144, 226, 0.4);
+  background: #357abd;
 }
 
 .submitBtn:disabled {
@@ -237,10 +237,10 @@
 
 .downloadBtn {
   display: inline-block;
-  padding: 0.875rem 2rem;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  padding: 14px 24px;
+  background: #10b981;
   color: white;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s;
@@ -250,7 +250,7 @@
 .downloadBtn:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  background: #059669;
 }
 
 .historyLink {
@@ -260,13 +260,13 @@
 }
 
 .historyLink a {
-  color: #667eea;
+  color: #4a90e2;
   text-decoration: underline;
   font-weight: 600;
 }
 
 .historyLink a:hover {
-  color: #764ba2;
+  color: #357abd;
 }
 
 /* Animations */

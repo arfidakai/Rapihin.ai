@@ -41,7 +41,7 @@
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -57,7 +57,7 @@
 .errorMessage {
   background-color: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 0.875rem 1rem;
   margin-bottom: 1.5rem;
   color: #fca5a5;
@@ -87,7 +87,7 @@
   padding: 0.875rem 1rem;
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  border-radius: 12px;
   color: white;
   font-size: 1rem;
   transition: all 0.3s;
@@ -98,25 +98,25 @@
 }
 
 .input:hover {
-  border-color: rgba(102, 126, 234, 0.5);
+  border-color: rgba(74, 144, 226, 0.5);
   background-color: rgba(255, 255, 255, 0.08);
 }
 
 .input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #4a90e2;
   background-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
 /* Submit Button */
 .submitBtn {
   width: 100%;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 14px 24px;
+  background: #4a90e2;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 600;
   font-size: 1.05rem;
   cursor: pointer;
@@ -126,8 +126,8 @@
 
 .submitBtn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-  background: linear-gradient(135deg, #5568d3 0%, #64397d 100%);
+  box-shadow: 0 15px 35px rgba(74, 144, 226, 0.4);
+  background: #357abd;
 }
 
 .submitBtn:disabled {
@@ -175,11 +175,11 @@
 /* Google Button */
 .googleBtn {
   width: 100%;
-  padding: 0.875rem 1rem;
+  padding: 14px 24px;
   background-color: white;
   color: #333;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -210,14 +210,14 @@
 }
 
 .link {
-  color: #667eea;
+  color: #4a90e2;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
 }
 
 .link:hover {
-  color: #764ba2;
+  color: #357abd;
   text-decoration: underline;
 }
 
