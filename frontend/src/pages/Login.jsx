@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "./Auth.module.css";
+import { useGoogleLogin } from '@react-oauth/google'; // Import library google
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,18 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  // FUNGSI GOOGLE LOGIN
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log("Login Google Sukses:", tokenResponse);
+      // Langsung arahkan ke dashboard
+      navigate("/upload");
+    },
+    onError: () => {
+      setError("Google Login Failed. Please try again.");
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,7 +93,8 @@ const Login = () => {
               <span>OR</span>
             </div>
 
-            <button className={styles.googleBtn} onClick={() => alert("Google OAuth coming soon!")}>
+            {/* TOMBOL GOOGLE SUDAH AKTIF */}
+            <button className={styles.googleBtn} onClick={() => googleLogin()}>
               <img
                 src="https://www.svgrepo.com/show/475656/google-color.svg"
                 alt="Google icon"
