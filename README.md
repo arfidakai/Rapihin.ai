@@ -1,1 +1,2 @@
-# learn-flutter
+#About
+Rapihin.ai helps students format their academic documents (thesis, papers, reports) according to university guidelines automatically. Built during a hackathon to solve the common pain point of academic document formatting.
