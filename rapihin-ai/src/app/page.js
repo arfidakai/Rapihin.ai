@@ -158,7 +158,7 @@ export default function Home() {
       {/* Footer */}
       <footer style={{ borderTop: '0.5px solid rgba(0,0,0,0.09)', padding: '1.5rem 2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span className="serif" style={{ fontSize: '1rem' }}>rapihin<span style={{ color: '#0F6E56' }}>.ai</span></span>
-        <span style={{ fontSize: 12, color: '#9ca3af' }}>Dibuat saat hackathon · 2025</span>
+        <span style={{ fontSize: 12, color: '#9ca3af' }}>Made with ❤️ · 2025</span>
       </footer>
     </div>
   )
