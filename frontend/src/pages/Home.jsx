@@ -1,25 +1,18 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star } from 'lucide-react';
-import Navbar from '../components/Navbar';
+import { Star, Menu, X } from 'lucide-react';
 import styles from './Home.module.css';
 
 export default function BaphinLanding() {
   const navigate = useNavigate();
-  const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState({
     'section-hero': true,
     'section-solution': true,
     'section-join': true,
     'section-reviews': true
   });
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -69,8 +62,38 @@ export default function BaphinLanding() {
 
   return (
     <div className={styles.container}>
-      <Navbar />
-      
+      {/* Header */}
+      <header className={styles.header}>
+        <div className={styles.headerContent}>
+          <h1 className={styles.logo}>Rapihin.ai</h1>
+
+          {/* Desktop Nav */}
+          <nav className={styles.nav}>
+            <a href="#section-hero" className={styles.navLink}>Home</a>
+            <a href="#section-join" className={styles.navLink}>How it Works</a>
+            <a href="#section-reviews" className={styles.navLink}>Reviews</a>
+            <Button primary style={{ padding: '0.6rem 1.2rem' }} onClick={() => navigate('/login')}>Login</Button>
+            <Button style={{ padding: '0.6rem 1.2rem' }} onClick={() => navigate('/upload')}>Get Started</Button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button className={styles.mobileMenuBtn} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className={styles.mobileMenu}>
+            <a href="#section-hero" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>Home</a>
+            <a href="#section-join" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>How it Works</a>
+            <a href="#section-reviews" className={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>Reviews</a>
+            <Button primary style={{ width: '100%', marginTop: '1rem' }} onClick={() => { setMobileMenuOpen(false); navigate('/login'); }}>Login</Button>
+            <Button style={{ width: '100%', marginTop: '0.5rem' }} onClick={() => { setMobileMenuOpen(false); navigate('/upload'); }}>Get Started</Button>
+          </div>
+        )}
+      </header>
+
       {/* Hero Section */}
       <Section id="section-hero">
         <div className={styles.hero}>

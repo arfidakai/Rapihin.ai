@@ -12,6 +12,7 @@ import shutil
 
 # Import our custom modules
 from app.document_formatter import DocumentFormatter
+from app.ai import AIService, AIUnavailable
 from app.auth import create_access_token, get_current_user, hash_password, verify_password
 from app.database import (
     create_user, get_user_by_email, save_format_history, get_user_history
@@ -75,6 +76,11 @@ class Token(BaseModel):
     access_token: str
     token_type: str
     user: dict
+
+class ProofreadRequest(BaseModel):
+    text: str
+    language: str = "id"
+    style: Optional[str] = None
 
 # Health check endpoint
 @app.get("/")
@@ -247,6 +253,20 @@ async def get_templates():
             }
         ]
     }
+
+# AI proofreading endpoint (optional; requires OPENAI_API_KEY)
+@app.post("/api/ai/proofread")
+async def ai_proofread(req: ProofreadRequest):
+    try:
+        ai = AIService()
+    except AIUnavailable as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    try:
+        improved = ai.proofread(req.text, language=req.language, style=req.style)
+        return {"result": improved}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"AI error: {str(e)}")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

@@ -75,6 +75,79 @@
   line-height: 1.6;
 }
 
+.proofreadSection {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(74, 144, 226, 0.25);
+  border-radius: 16px;
+  background: rgba(74, 144, 226, 0.06);
+}
+
+.proofreadTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.35rem;
+}
+
+.proofreadSubtitle {
+  margin: 0 0 1rem;
+  color: #a0a0a0;
+  font-size: 0.95rem;
+}
+
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.875rem 1rem;
+  resize: vertical;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  font: inherit;
+  line-height: 1.5;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.secondaryBtn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid #4a90e2;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.secondaryBtn:hover:not(:disabled) {
+  background: rgba(74, 144, 226, 0.18);
+}
+
+.secondaryBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.proofreadResult {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-left: 3px solid #10b981;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.proofreadResult p {
+  margin: 0.5rem 0 0;
+  color: #d0d0d0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
 /* Upload Box */
 .uploadBox {
   background-color: rgba(255, 255, 255, 0.03);

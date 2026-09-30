@@ -1,14 +1,12 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { documentAPI } from "../services/api";
-import { useAuth } from "../context/AuthContext";
+import { aiAPI, documentAPI } from "../services/api";
+import { useAuth } from "../context/AuthContextValue";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import LoadingSpinner from "../components/LoadingSpinner";
 import styles from "./Upload.module.css";
 
 const UploadPage = () => {
-  const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState("No file selected");
   const [loading, setLoading] = useState(false);
@@ -16,6 +14,9 @@ const UploadPage = () => {
   const [documentType, setDocumentType] = useState("Academic Papers");
   const [university, setUniversity] = useState("National Standard");
   const [error, setError] = useState("");
+  const [proofreadText, setProofreadText] = useState("");
+  const [proofreadResult, setProofreadResult] = useState("");
+  const [proofreadLoading, setProofreadLoading] = useState(false);
   const { user } = useAuth();
 
   const handleDrop = (e) => {
@@ -74,6 +75,25 @@ const UploadPage = () => {
     }
   };
 
+  const handleProofreadClick = async () => {
+    if (!proofreadText.trim()) {
+      setError("Please enter text to proofread first.");
+      return;
+    }
+
+    setProofreadLoading(true);
+    setError("");
+
+    try {
+      const response = await aiAPI.proofread(proofreadText);
+      setProofreadResult(response.data.result || proofreadText);
+    } catch (err) {
+      setError(err.response?.data?.detail || "AI proofreading is unavailable right now.");
+    } finally {
+      setProofreadLoading(false);
+    }
+  };
+
   return (
     <div className={styles.uploadPage}>
       <Navbar />
@@ -98,6 +118,37 @@ const UploadPage = () => {
           <p className={styles.subtitle}>
             Upload your academic document and let AI format it perfectly
           </p>
+
+          <div className={styles.proofreadSection}>
+            <h2 className={styles.proofreadTitle}>AI Proofreading</h2>
+            <p className={styles.proofreadSubtitle}>
+              Check grammar and clarity before formatting your document.
+            </p>
+            <textarea
+              className={styles.textarea}
+              value={proofreadText}
+              onChange={(e) => {
+                setProofreadText(e.target.value);
+                setProofreadResult("");
+              }}
+              placeholder="Paste a paragraph to proofread..."
+              rows={6}
+              disabled={proofreadLoading}
+            />
+            <button
+              className={styles.secondaryBtn}
+              onClick={handleProofreadClick}
+              disabled={proofreadLoading}
+            >
+              {proofreadLoading ? "Proofreading..." : "Proofread with AI"}
+            </button>
+            {proofreadResult && (
+              <div className={styles.proofreadResult}>
+                <span className={styles.label}>Improved text</span>
+                <p>{proofreadResult}</p>
+              </div>
+            )}
+          </div>
 
           <div
             className={styles.uploadBox}
@@ -156,22 +207,25 @@ const UploadPage = () => {
           </button>
 
           {downloadUrl && (
-            <div className={styles.successBox}>
-              <div className={styles.successIcon}>✅</div>
-              <h3 className={styles.successTitle}>Document formatted successfully!</h3>
-              <p className={styles.successText}>File downloaded automatically. If not, click below:</p>
-              <a
-                href={downloadUrl}
-                download="formatted_document.docx"
-                className={styles.downloadBtn}
-              >
-                📥 Download Again
-              </a>
-              {user && (
-                <p className={styles.historyLink}>
-                  📊 Check your <a href="/history">History</a> page
-                </p>
-              )}
+            <div className={`${styles.alert} ${styles.alertSuccess}`}>
+              <span className={styles.alertIcon}>✅</span>
+              <span>
+                Document formatted successfully! File downloaded automatically.
+                {user && (
+                  <>
+                    {" "}📊 Check your <a href="/history">History</a> page
+                  </>
+                )}
+                {" "}
+                <a
+                  href={downloadUrl}
+                  download="formatted_document.docx"
+                  className={styles.alertLink}
+                  style={{ marginLeft: 8 }}
+                >
+                  (Download Again)
+                </a>
+              </span>
             </div>
           )}
         </div>

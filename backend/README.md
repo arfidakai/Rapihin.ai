@@ -9,6 +9,7 @@ Backend API untuk Rapihin.ai - Automatic thesis and academic document formatting
 - 🔐 **Authentication**: Register, login, dan JWT-based authentication
 - 📊 **History Tracking**: Simpan riwayat formatting untuk user yang login
 - 🚀 **Fast & Easy**: Built with FastAPI untuk performa tinggi
+ - ✨ **AI Proofreading**: Endpoint opsional untuk proofreading teks via OpenAI (butuh API key)
 
 ## Tech Stack
 
@@ -51,6 +52,14 @@ cp .env.example .env
 
 Edit `.env` dan ubah `SECRET_KEY` dengan random string yang aman.
 
+Jika ingin mengaktifkan AI proofreading, tambahkan juga:
+
+```
+OPENAI_API_KEY=sk-...
+# opsional
+OPENAI_MODEL=gpt-4o-mini
+```
+
 ### 5. Run the server
 
 ```bash
@@ -85,6 +94,16 @@ Setelah server berjalan, buka:
 
 - `GET /api/history` - Get user formatting history (requires auth)
 - `GET /api/templates` - Get available templates
+
+### AI (Optional)
+
+- `POST /api/ai/proofread` - Proofread/improve teks menggunakan OpenAI
+  - Body JSON:
+    - `text`: string (wajib)
+    - `language`: `"id"` atau `"en"` (default: `"id"`)
+    - `style`: string opsional (misal: "lebih formal, ringkas")
+  - Response:
+    - `{ "result": "teks yang sudah diperbaiki" }`
 
 ## Formatting Rules
 
@@ -145,6 +164,11 @@ curl -X POST "http://localhost:8000/api/auth/register" \
 curl -X POST "http://localhost:8000/api/auth/login" \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"test123"}'
+
+# AI Proofread (requires OPENAI_API_KEY)
+curl -X POST "http://localhost:8000/api/ai/proofread" \
+  -H "Content-Type: application/json" \
+  -d '{"text":"saya ingin membuat skripsi yang baik dan benar.", "language":"id"}'
 ```
 
 ## Notes

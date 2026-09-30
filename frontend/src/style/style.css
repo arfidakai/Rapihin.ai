@@ -37,7 +37,7 @@ body {
   right: 0;
   height: 64px;
   z-index: 50;
-  background: linear-gradient(180deg, #1e3556 0%, #1c2f4d 100%);
+  background: linear-gradient(180deg, rgba(37,99,235,0.5) 0%, #1c2f4d 100%);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
