@@ -1,0 +1,69 @@
+/* info.css - scoped styles for Info page */
+
+.infoPage{
+  --bg: #0b0b0c;
+  --text: #f3f3f4;
+  --muted: rgba(243,243,244,.72);
+  --muted2: rgba(243,243,244,.55);
+  --blue: #1f4aa5;
+  --blue2: #153a86;
+  --radius: 22px;
+  --shadow: 0 18px 50px rgba(0,0,0,.45);
+  --navH: 64px;
+
+  min-height: 100vh;
+  color: var(--text);
+  background: radial-gradient(1200px 700px at 20% 10%, #191a1d 0%, var(--bg) 45%, #050506 100%);
+}
+
+@media (max-width: 768px){
+  .infoPage{ --navH: 56px; }
+}
+
+.infoPage *{ box-sizing:border-box; }
+
+.infoMain{
+  padding: calc(var(--navH) + 24px) 20px 40px;
+}
+
+.infoCard{
+  width: min(780px, 92%);
+  margin: 0 auto;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.08);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  box-shadow: var(--shadow);
+  padding: 24px;
+  text-align: center;
+}
+
+.infoImageWrap{ display:flex; justify-content:center; margin-bottom: 12px; }
+.infoImage{ width: min(420px, 86%); height:auto; filter: drop-shadow(0 10px 30px rgba(0,0,0,.45)); border-radius: 12px; }
+
+.infoH1{ margin: 10px 0 8px; font-size: clamp(28px, 6vw, 40px); letter-spacing: -0.3px; }
+.infoH2{ margin: 14px 0 8px; font-size: clamp(22px, 4.8vw, 28px); letter-spacing: -0.2px; }
+.infoP{ margin: 6px 0 12px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+
+.infoBtn{
+  display:inline-block;
+  border: 1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, var(--blue), var(--blue2));
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+  margin: 4px 0 8px;
+}
+.infoBtn:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(31,74,165,.45); }
+.infoBtn:active{ transform:none; }
+
+.infoFooter{ margin-top: 10px; font-size: 12px; color: var(--muted2); }
+
+/* Small phones tweaks */
+@media (max-width: 480px){
+  .infoMain{ padding: calc(var(--navH) + 18px) 16px 28px; }
+  .infoCard{ padding: 18px; }
+  .infoImage{ width: 92%; }
+}

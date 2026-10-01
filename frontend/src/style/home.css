@@ -1,0 +1,464 @@
+/* Home.css (scoped) */
+.homePage{
+  --bg: #0b0b0c;
+  --bg2: #111214;
+  --panel: #2b2c2f;
+  --panel2: #333438;
+  --text: #f3f3f4;
+  --muted: rgba(243,243,244,.72);
+  --muted2: rgba(243,243,244,.55);
+  --blue: #1f4aa5;
+  --blue2: #153a86;
+  --shadow: 0 18px 50px rgba(0,0,0,.45);
+  --radius: 22px;
+  --radius2: 28px;
+
+  min-height: 100vh;
+  color: var(--text);
+  background: radial-gradient(1200px 700px at 20% 10%, #191a1d 0%, var(--bg) 45%, #050506 100%);
+}
+
+.homePage *{ box-sizing:border-box; }
+.homePage a{ color: inherit; text-decoration:none; }
+.homePage button{ font: inherit; }
+
+.homePage{
+  --navH: 64px; /* match .navbar height */
+}
+
+@media (max-width: 768px){
+  .homePage{ --navH: 56px; }
+}
+
+.homePage main{
+  padding-top: var(--navH);
+}
+
+
+
+.homePage .container{
+  width: min(1100px, 92%);
+  margin: 0 auto;
+}
+
+
+.homePage .headerInner{
+  height: 56px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.homePage .brand{
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+.homePage .iconBtn{
+  width: 40px;
+  height: 40px;
+  display:grid;
+  place-items:center;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.9);
+  cursor: pointer;
+}
+.homePage .iconBtn:hover{ background: rgba(255,255,255,.07); }
+
+/* Hero (match design spacing) */
+.homePage .hero{ padding: 80px 0 40px; }
+
+/* .homePage .heroGrid{
+  display:grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+}
+/* On mobile, put copy above artwork for better UX */
+/* .homePage .heroCopy{ order: -1; }
+
+.homePage .heroArt{
+  height: 170px;
+  border-radius: var(--radius2);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0));
+  border: 1px solid rgba(255,255,255,.07);
+  position: relative;
+  overflow:hidden;
+} */ */
+
+.homePage .artBlob{
+  position:absolute;
+  inset: -30% -10% auto -10%;
+  height: 220px;
+  background: radial-gradient(circle at 30% 30%, rgba(79,169,255,.55), rgba(79,169,255,0) 60%);
+  filter: blur(2px);
+}
+
+.homePage .artCard{
+  position:absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  width: 170px;
+  height: 120px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.homePage .artDot{
+  position:absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, rgba(120,214,255,.95), rgba(20,140,255,.6));
+  box-shadow: 0 10px 25px rgba(0,0,0,.35);
+}
+.homePage .d1{ left: 14%; top: 26%; }
+.homePage .d2{ right: 18%; top: 18%; width: 38px; height: 38px; opacity:.9; }
+.homePage .d3{ right: 28%; bottom: 14%; width: 34px; height: 34px; opacity:.85; }
+
+.homePage .heroCopy{ padding: 2px 0 10px; }
+
+.homePage .kicker{
+  font-size: 12px;
+  letter-spacing: .8px;
+  font-weight: 600;
+  color: rgba(255,255,255,.75);
+  margin-bottom: 12px;
+}
+
+.homePage .h1{
+  margin: 0;
+  font-size: clamp(34px, 7vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.8px;
+}
+
+.homePage .sub{
+  margin: 10px 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.homePage .ctaRow{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  max-width: 420px;
+}
+/* Full-width CTAs on small screens */
+.homePage .ctaRow .btn{ width: 100%; }
+
+.homePage .note{
+  margin: 14px 0 0;
+  color: var(--muted2);
+  font-size: 13px;
+}
+
+/* Buttons */
+.homePage .btn{
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.92);
+  padding: 13px 16px;
+  border-radius: 999px;
+  cursor:pointer;
+  transition: transform .12s ease, background .12s ease;
+}
+.homePage .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.08); }
+.homePage .btn:active{ transform: translateY(0px); }
+
+
+.homePage .btn.primary{
+  background: linear-gradient(180deg, var(--blue), var(--blue2));
+  border-color: rgba(255,255,255,.10);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(31,74,165,.18);
+}
+.homePage .btn.primary:hover{
+  background: linear-gradient(180deg, #2454be, #173f95);
+  box-shadow: 0 6px 18px rgba(31,74,165,.28);
+}
+
+
+.homePage .btn.secondary{
+  background: #222;
+  border-color: rgba(31,74,165,.25);
+  color: #fff;
+  font-weight: 500;
+}
+.homePage .btn.secondary:hover{
+  background: #333;
+}
+
+.homePage .btn.small{ padding: 12px 16px; width: fit-content; }
+
+/* Cards section */
+.homePage .cardsSection{ padding: 16px 0 22px; }
+
+.homePage .cardsGrid{
+  display:grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+.homePage .card{
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius2);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+.homePage .cardMedia{
+  height: 170px;
+  display:grid;
+  place-items:center;
+  position: relative;
+  background: radial-gradient(420px 240px at 40% 30%, rgba(79,169,255,.35), rgba(79,169,255,0) 60%),
+              linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0));
+}
+.homePage .cardMedia.tall{ height: 190px; }
+
+.homePage .mediaCircle{
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, rgba(120,214,255,.95), rgba(20,140,255,.55));
+  opacity: .9;
+}
+
+.homePage .mediaSmall{
+  position:absolute;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.9), rgba(120,214,255,.35));
+  opacity: .7;
+}
+.homePage .mediaSmall.s1{ left: 18%; top: 24%; }
+.homePage .mediaSmall.s2{ right: 16%; bottom: 20%; width: 34px; height: 34px; opacity:.55; }
+
+.homePage .mediaPanel{
+  width: 82%;
+  height: 70%;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.04));
+}
+
+.homePage .cardBody{ padding: 18px 18px 18px; }
+
+.homePage .h2{
+  margin: 0 0 10px;
+  font-size: 28px;
+  line-height: 1.08;
+  letter-spacing: -0.4px;
+}
+
+.homePage .p{
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.homePage .steps{
+  margin: 10px 0 16px;
+  display:grid;
+  gap: 12px;
+}
+.homePage .stepTitle{
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.homePage .stepDesc{
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+/* Reviews */
+.homePage .reviews{ padding: 8px 0 28px; }
+
+.homePage .sectionTitle{
+  margin: 0;
+  text-align:center;
+  font-size: 28px;
+  letter-spacing: -0.2px;
+}
+.homePage .sectionSub{
+  margin: 6px 0 16px;
+  text-align:center;
+  color: var(--muted2);
+  font-size: 13px;
+}
+
+.homePage .reviewCard{
+  padding: 18px;
+  text-align:center;
+}
+
+.homePage .quote{ margin: 0 0 12px; color: rgba(255,255,255,.9); }
+
+.homePage .stars{
+  display:flex;
+  justify-content:center;
+  gap: 6px;
+  margin: 6px 0 12px;
+}
+.homePage .star{ font-size: 16px; opacity: .95; }
+
+.homePage .reviewer .name{
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.homePage .reviewer .role{
+  color: var(--muted2);
+  font-size: 12.5px;
+}
+
+.homePage .dots{
+  display:flex;
+  justify-content:center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.homePage .dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.25);
+}
+.homePage .dot.active{ background: rgba(255,255,255,.6); }
+
+/* Footer */
+.homePage .footer{
+  margin-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  background: rgba(0,0,0,.25);
+}
+.homePage .footerInner{
+  padding: 16px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+}
+.homePage .footerBrand{
+  font-weight: 700;
+  color: rgba(255,255,255,.85);
+}
+.homePage .footerNav{
+  display:none;
+  gap: 18px;
+  color: rgba(255,255,255,.7);
+  font-size: 13px;
+}
+.homePage .footerNav a:hover{ color: rgba(255,255,255,.9); }
+.homePage .footerDropdown{
+  border-radius: 999px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.75);
+  cursor:pointer;
+}
+
+/* Desktop tweaks */
+@media (min-width: 900px){
+  .homePage .hero{ padding: 100px 0 60px; }
+  .homePage .heroGrid{
+    grid-template-columns: 1.05fr .95fr;
+    align-items:center;
+    gap: 26px;
+  }
+  .homePage .heroArt{ height: 320px; }
+  /* Restore default order on desktop */
+  .homePage .heroCopy{ order: 0; }
+  .homePage .ctaRow{ flex-direction:row; }
+  .homePage .btn{ min-width: 190px; }
+  .homePage .ctaRow .btn{ width: auto; }
+
+  .homePage .cardsGrid{
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .homePage .footerNav{ display:flex; }
+}
+
+/* Small phones: tighten spacing and sizes */
+@media (max-width: 480px){
+  .homePage .hero{ padding: 60px 0 30px; }
+  .homePage .heroArt{ height: 150px; }
+  .homePage .cardBody{ padding: 16px; }
+  .homePage .cardsSection{ padding: 12px 0 16px; }
+  .homePage .btn.primary, .homePage .btn.secondary {
+    font-size: 16px;
+    padding: 14px 0;
+    min-width: 0;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}
+
+/* Large desktop polish */
+@media (min-width: 1200px){
+  .homePage .heroArt{ height: 360px; }
+}
+
+
+/* ===== Mobile fixes ===== */
+@media (max-width: 768px){
+
+  /* container jangan terlalu sempit + aman dari notch */
+  .homePage .container{
+    width: min(1100px, 92%);
+  }
+
+  /* hero jadi stack rapi */
+  .homePage .hero{
+    padding: 18px 0 8px;
+  }
+
+  .homePage .heroGrid{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* artwork jangan kegedean */
+  .homePage .heroArt{
+    height: 150px;
+    border-radius: 22px;
+  }
+
+  /* headline biar nggak kepotong */
+  .homePage .h1{
+    font-size: 34px;
+    line-height: 1.05;
+  }
+
+  /* tombol full width biar mirip desain mobile */
+  .homePage .ctaRow{
+    max-width: 100%;
+  }
+  .homePage .btn{
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* cards jadi 1 kolom (pasti) */
+  .homePage .cardsGrid{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* card media aman */
+  .homePage .cardMedia{
+    height: 160px;
+  }
+}
+/* ===== End Mobile fixes ===== */

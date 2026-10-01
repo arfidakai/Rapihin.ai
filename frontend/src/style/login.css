@@ -1,0 +1,159 @@
+/* login.css – scoped to .loginPage to avoid global conflicts */
+.loginPage{
+  --bg: #0b0b0c;
+  --text: #f3f3f4;
+  --muted: #b0a6a6;
+  --blue: #163870;
+  --blueH: #3267bc;
+  --radius: 16px;
+  --navH: 64px; /* match global navbar */
+
+  min-height: 100vh;
+  color: var(--text);
+  background: #000000;
+}
+
+@media (max-width: 768px){
+  .loginPage{ --navH: 56px; }
+}
+
+.loginMain{ padding: calc(var(--navH) + 24px) 16px 40px; }
+
+.loginPage .login-wrapper {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.loginPage .login-box {
+  background: #213552;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.loginPage .login-box h1 {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.loginPage .login-box p {
+  font-size: 14px;
+  color: #b0a6a6;
+  margin-bottom: 24px;
+}
+
+.loginPage form {
+  text-align: left;
+}
+
+.loginPage label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.loginPage input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.loginPage .login-btn {
+  width: 100%;
+  padding: 12px;
+  background:  #163870;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.loginPage .login-btn:hover {
+  background: #3267bc;
+}
+
+.loginPage .divider {
+  margin: 20px 0;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+  position: relative;
+}
+
+.loginPage .divider::before,
+.loginPage .divider::after {
+  content: "";
+  height: 1px;
+  background: #ccc;
+  position: absolute;
+  top: 50%;
+  width: 40%;
+}
+
+.loginPage .divider::before {
+  left: 0;
+}
+
+.loginPage .divider::after {
+  right: 0;
+}
+
+.loginPage .google-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  width: 100%;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  font-size: 14px;
+  background: white;
+  transition: background 0.2s ease;
+}
+
+.loginPage .google-btn:hover {
+  background: #f1f1f1;
+}
+
+.loginPage .google-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.loginPage .signup-text {
+  margin-top: 24px;
+  font-size: 13px;
+  color: #666;
+}
+
+.loginPage .signup-text a {
+  color:  #3b82f6;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.loginPage .error-message {
+  background-color: #fee;
+  color: #c33;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid #fcc;
+  font-size: 0.9rem;
+  text-align: center;
+}

@@ -1,0 +1,18 @@
+/* src/index.css — Tailwind CSS base styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  /* IMPORTANT: no flex centering or 100vh here to prevent clipping */
+}
+
+#root { min-height: 100%; }
+
+/* Keep defaults neutral; page-level files handle colors/typography */
