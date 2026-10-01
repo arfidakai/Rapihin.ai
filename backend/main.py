@@ -150,6 +150,7 @@ async def get_me(current_user: dict = Depends(get_current_user)):
 @app.post("/format-docx/")
 async def format_document(
     file: UploadFile = File(...),
+    template_file: Optional[UploadFile] = File(None),
     document_type: str = Form("Academic Papers"),
     university: str = Form("National Standard"),
     current_user: Optional[dict] = Depends(get_current_user)
@@ -157,32 +158,46 @@ async def format_document(
     """
     Upload and format a Word document according to academic standards.
     
-    - **file**: The .doc or .docx file to format
+    - **file**: The article .doc or .docx file to format
+    - **template_file**: Optional article template used as the formatting source
     - **document_type**: Type of document (Academic Papers, Thesis, Internship Report, Dissertation)
     - **university**: University template (National Standard, ITB, UI, UGM)
     """
     
     # Validate file type
-    if not (file.filename.endswith('.doc') or file.filename.endswith('.docx')):
+    if not file.filename or not (file.filename.lower().endswith('.doc') or file.filename.lower().endswith('.docx')):
         raise HTTPException(status_code=400, detail="Only .doc or .docx files are allowed")
+    if template_file and (
+        not template_file.filename
+        or not template_file.filename.lower().endswith(('.doc', '.docx'))
+    ):
+        raise HTTPException(status_code=400, detail="The template must be a .doc or .docx file")
     
     # Generate unique filename
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     original_filename = file.filename
     input_filename = f"{timestamp}_{original_filename}"
     input_path = UPLOAD_DIR / input_filename
+    template_path = None
+    if template_file and template_file.filename:
+        template_path = UPLOAD_DIR / f"{timestamp}_template_{template_file.filename}"
     
     try:
         # Save uploaded file
         with open(input_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
+
+        if template_file and template_path:
+            with open(template_path, "wb") as buffer:
+                shutil.copyfileobj(template_file.file, buffer)
         
         # Format document
         formatter = DocumentFormatter()
         output_path = formatter.format_document(
             input_path=str(input_path),
             document_type=document_type,
-            university=university
+            university=university,
+            template_path=str(template_path) if template_path else None,
         )
         
         # Save to history if user is logged in
@@ -206,6 +221,8 @@ async def format_document(
         # Clean up files on error
         if input_path.exists():
             input_path.unlink()
+        if template_path and template_path.exists():
+            template_path.unlink()
         raise HTTPException(status_code=500, detail=f"Error formatting document: {str(e)}")
     
     finally:
@@ -213,6 +230,11 @@ async def format_document(
         if input_path.exists():
             try:
                 input_path.unlink()
+            except:
+                pass
+        if template_path and template_path.exists():
+            try:
+                template_path.unlink()
             except:
                 pass
 

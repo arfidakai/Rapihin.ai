@@ -10,6 +10,8 @@ from docx.enum.style import WD_STYLE_TYPE
 from pathlib import Path
 from datetime import datetime
 import os
+from copy import deepcopy
+from docx.oxml.ns import qn
 
 
 class DocumentFormatter:
@@ -67,7 +69,13 @@ class DocumentFormatter:
             }
         }
     
-    def format_document(self, input_path: str, document_type: str, university: str) -> str:
+    def format_document(
+        self,
+        input_path: str,
+        document_type: str,
+        university: str,
+        template_path: str = None,
+    ) -> str:
         """
         Format a Word document according to specified university standards
         
@@ -82,14 +90,17 @@ class DocumentFormatter:
         # Load document
         doc = Document(input_path)
         
-        # Get formatting rules
-        rules = self.formatting_rules.get(university, self.formatting_rules["National Standard"])
-        
-        # Apply formatting
-        self._apply_page_margins(doc, rules)
-        self._apply_text_formatting(doc, rules)
-        self._format_headings(doc, rules)
-        self._fix_paragraph_spacing(doc, rules)
+        if template_path:
+            template_doc = Document(template_path)
+            self._copy_template_formatting(doc, template_doc)
+        else:
+            # Get formatting rules for the legacy one-file flow.
+            rules = self.formatting_rules.get(university, self.formatting_rules["National Standard"])
+
+            self._apply_page_margins(doc, rules)
+            self._apply_text_formatting(doc, rules)
+            self._format_headings(doc, rules)
+            self._fix_paragraph_spacing(doc, rules)
         
         # Generate output filename
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -100,6 +111,39 @@ class DocumentFormatter:
         doc.save(str(output_path))
         
         return str(output_path)
+
+    def _copy_template_formatting(self, doc: Document, template_doc: Document):
+        """Apply the template's styles and page layout without replacing article text."""
+        self._copy_styles(doc, template_doc)
+
+        for target_section, template_section in zip(doc.sections, template_doc.sections):
+            target_section.page_width = template_section.page_width
+            target_section.page_height = template_section.page_height
+            target_section.top_margin = template_section.top_margin
+            target_section.bottom_margin = template_section.bottom_margin
+            target_section.left_margin = template_section.left_margin
+            target_section.right_margin = template_section.right_margin
+            target_section.header_distance = template_section.header_distance
+            target_section.footer_distance = template_section.footer_distance
+
+        for paragraph in doc.paragraphs:
+            if paragraph.style.name in template_doc.styles:
+                paragraph.style = paragraph.style.name
+
+    def _copy_styles(self, doc: Document, template_doc: Document):
+        """Replace matching style definitions so paragraph and run formatting follows the template."""
+        target_styles = doc.styles.element
+        target_style_elements = {
+            style.get(qn("w:styleId")): style
+            for style in target_styles.findall(qn("w:style"))
+        }
+
+        for template_style in template_doc.styles.element.findall(qn("w:style")):
+            style_id = template_style.get(qn("w:styleId"))
+            existing_style = target_style_elements.get(style_id)
+            if existing_style is not None:
+                target_styles.remove(existing_style)
+            target_styles.append(deepcopy(template_style))
     
     def _apply_page_margins(self, doc: Document, rules: dict):
         """Apply page margins according to rules"""
