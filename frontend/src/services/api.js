@@ -37,9 +37,10 @@ export const authAPI = {
 
 // Document API
 export const documentAPI = {
-  formatDocument: (file, documentType, university) => {
+  formatDocument: (file, documentType, university, templateFile = null) => {
     const formData = new FormData();
     formData.append('file', file);
+    if (templateFile) formData.append('template_file', templateFile);
     formData.append('document_type', documentType);
     formData.append('university', university);
     

@@ -8,7 +8,9 @@ import styles from "./Upload.module.css";
 
 const UploadPage = () => {
   const fileInputRef = useRef(null);
+  const templateInputRef = useRef(null);
   const [fileName, setFileName] = useState("No file selected");
+  const [templateName, setTemplateName] = useState("No template selected");
   const [loading, setLoading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState(null);
   const [documentType, setDocumentType] = useState("Academic Papers");
@@ -38,16 +40,29 @@ const UploadPage = () => {
     }
   };
 
+  const handleTemplateChange = (e) => {
+    if (e.target.files.length > 0) {
+      setTemplateName("Selected: " + e.target.files[0].name);
+      setDownloadUrl(null);
+    }
+  };
+
   const handleFormatClick = async () => {
     if (!fileInputRef.current || fileInputRef.current.files.length === 0) {
-      setError("Please choose a .doc or .docx file first.");
+      setError("Please choose the article you want to format first.");
+      return;
+    }
+
+    if (!templateInputRef.current || templateInputRef.current.files.length === 0) {
+      setError("Please choose an article template first.");
       return;
     }
 
     const file = fileInputRef.current.files[0];
+    const templateFile = templateInputRef.current.files[0];
 
-    if (file.size > 10 * 1024 * 1024) {
-      setError("File size must be less than 10MB");
+    if (file.size > 10 * 1024 * 1024 || templateFile.size > 10 * 1024 * 1024) {
+      setError("Each file must be less than 10MB");
       return;
     }
 
@@ -56,7 +71,12 @@ const UploadPage = () => {
     setError("");
 
     try {
-      const response = await documentAPI.formatDocument(file, documentType, university);
+      const response = await documentAPI.formatDocument(
+        file,
+        documentType,
+        university,
+        templateFile
+      );
       const url = window.URL.createObjectURL(new Blob([response.data]));
       setDownloadUrl(url);
 
@@ -150,13 +170,35 @@ const UploadPage = () => {
             )}
           </div>
 
+          <div className={styles.templateUpload}>
+            <label htmlFor="template-upload" className={styles.label}>
+              Article Template
+            </label>
+            <p className={styles.uploadHint}>
+              Upload the .doc or .docx file whose formatting should be copied.
+            </p>
+            <label htmlFor="template-upload" className={styles.uploadBtn}>
+              Choose Template
+            </label>
+            <input
+              type="file"
+              id="template-upload"
+              accept=".doc,.docx"
+              style={{ display: "none" }}
+              ref={templateInputRef}
+              onChange={handleTemplateChange}
+            />
+            <p className={styles.fileName}>{templateName}</p>
+          </div>
+
           <div
             className={styles.uploadBox}
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
           >
             <div className={styles.uploadIcon}>📄</div>
-            <p className={styles.uploadText}>Drag & drop your file here,</p>
+            <p className={styles.uploadText}>Article to format</p>
+            <p className={styles.uploadHint}>Drag & drop your unsorted article here, or choose a file.</p>
             <p className={styles.uploadOr}>or</p>
             <label htmlFor="file-upload" className={styles.uploadBtn}>
               Choose File
